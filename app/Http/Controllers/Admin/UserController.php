@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+    protected $roles = ['Admin','User'];
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +17,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users  = User::select(['id','name','email','password','role','is_active'])->paginate(10);
+
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -24,7 +29,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = $this->roles;
+
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -35,7 +42,22 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'max:100'],
+            'email' => ['required', 'email', 'max:100', 'unique:users,email'],
+            'password' => ['required', 'min:6', 'max:100', 'confirmed'],
+            'role' => ['required', Rule::in($this->roles)],
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
+        ]);
+
+        return redirect()->route('admin.users.index')
+            ->with('success', 'User Created Successfully !!');
     }
 
     /**
@@ -44,9 +66,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('admin.users.show', compact('user'));
     }
 
     /**
@@ -55,9 +77,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        $roles = $this->roles;
+
+        return view('admin.users.edit', compact('roles','user'));
     }
 
     /**
@@ -67,9 +91,24 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'max:100'],
+            'email' => ['required', 'email', 'max:100', 'unique:users,email,'.$user->id],
+            'password' => ['required', 'min:6', 'max:100', 'confirmed'],
+            'role' => ['required', Rule::in($this->roles)],
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
+        ]);
+
+        return redirect()->route('admin.users.index')
+            ->with('success', 'User Updated Successfully !!');
     }
 
     /**
@@ -78,8 +117,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return redirect()->route('admin.users.index')
+            ->with('success', 'User Deleted Successfully !!');
     }
 }
