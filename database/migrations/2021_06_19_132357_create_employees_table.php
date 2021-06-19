@@ -20,7 +20,7 @@ class CreateEmployeesTable extends Migration
             $table->string('phone')->nullable();
             $table->string('position');
             $table->string('salary');
-            $table->integer('Pan_number');
+            $table->integer('pan_number');
             $table->timestamps();
         });
     }
