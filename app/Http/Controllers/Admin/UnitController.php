@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 
 class UnitController extends Controller
@@ -14,7 +15,9 @@ class UnitController extends Controller
      */
     public function index()
     {
-        //
+        $units = Unit::paginate(10);
+
+        return view('admin.units.index', compact('units'));
     }
 
     /**
@@ -24,7 +27,7 @@ class UnitController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create');
     }
 
     /**
@@ -35,7 +38,22 @@ class UnitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'singular_name' =>  ['required','max:50'],
+            'plural_name'   =>  ['nullable'],
+            'singular_abbr' =>  ['required'],
+            'plural_abbr'   =>  ['nullable'],
+        ]);
+
+        Unit::create([
+            'singular_name' =>  $request->singular_name,
+            'plural_name'   =>  $request->plural_name,
+            'singular_abbr' =>  $request->singular_abbr,
+            'plural_abbr'   =>  $request->plural_abbr,
+        ]);
+
+        return redirect()->route('admin.units.index')
+            ->with('success', 'New Unit has been created successfully !!');
     }
 
     /**
@@ -44,9 +62,9 @@ class UnitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Unit $unit)
     {
-        //
+        return view('admin.units.show', compact('unit'));
     }
 
     /**
@@ -55,9 +73,9 @@ class UnitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Unit $unit)
     {
-        //
+        return view('admin.units.edit', compact('unit'));
     }
 
     /**
@@ -67,9 +85,24 @@ class UnitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Unit $unit)
     {
-        //
+        $request->validate([
+            'singular_name' =>  ['required','max:50'],
+            'plural_name'   =>  ['nullable'],
+            'singular_abbr' =>  ['required'],
+            'plural_abbr'   =>  ['nullable'],
+        ]);
+
+        $unit->update([
+            'singular_name' =>  $request->singular_name,
+            'plural_name'   =>  $request->plural_name,
+            'singular_abbr' =>  $request->singular_abbr,
+            'plural_abbr'   =>  $request->plural_abbr,
+        ]);
+
+        return redirect()->route('admin.units.index')
+            ->with('success', 'Unit has been updated successfully !!');
     }
 
     /**
@@ -78,8 +111,11 @@ class UnitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Unit $unit)
     {
-        //
+        $unit->delete();
+
+        return redirect()->route('admin.units.index')
+        ->with('success', 'Unit has been deleted successfully !!');
     }
 }
