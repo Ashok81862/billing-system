@@ -85,7 +85,7 @@ class CategoryController extends Controller
             'name'  =>['required','max:50'],
         ]);
 
-        Category::create([
+        $category->update([
             'name'  =>  $request->name,
         ]);
 
