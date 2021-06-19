@@ -278,6 +278,11 @@ return [
             'icon' => 'nav-icon fas fa-fw fa-money-check-alt',
         ],
         [
+            'text' => 'Logistic',
+            'icon' => 'nav-icon fas fa-fw fa-asterisk',
+            'url' => '/admin/logistics',
+        ],
+        [
             'text'        => 'More Features',
             'url'         => '#',
             'icon'        => 'nav-icon fas fa-fw fa-grip-vertical',
@@ -293,9 +298,9 @@ return [
                     'url' => '/admin/categories',
                 ],
                 [
-                    'text' => 'Logistics',
+                    'text' => 'Logistic Types',
                     'icon' => 'nav-icon fas fa-fw fa-asterisk',
-                    'url' => '/admin/logistics',
+                    'url' => '/admin/logisticTypes',
                 ],
                 [
                     'text' => 'Employees',

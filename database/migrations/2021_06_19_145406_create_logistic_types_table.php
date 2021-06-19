@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLogisticsTable extends Migration
+class CreateLogisticTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateLogisticsTable extends Migration
      */
     public function up()
     {
-        Schema::create('logistics', function (Blueprint $table) {
+        Schema::create('logistic_types', function (Blueprint $table) {
             $table->id();
-            $table->integer('amount');
-            $table->foreignId('logistic_type_id');
-            $table->longText('remark')->nullable();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateLogisticsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('logistics');
+        Schema::dropIfExists('logistic_types');
     }
 }

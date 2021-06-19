@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Logistic;
+use App\Models\LogisticType;
 use Illuminate\Http\Request;
 
 class LogisticController extends Controller
@@ -15,7 +16,7 @@ class LogisticController extends Controller
      */
     public function index()
     {
-        $logistics = Logistic::select(['id','name'])->paginate(10);
+        $logistics = Logistic::select(['id','amount','logistic_type_id','remark'])->paginate(10);
 
         return view('admin.logistics.index', compact('logistics'));
     }
@@ -27,7 +28,9 @@ class LogisticController extends Controller
      */
     public function create()
     {
-        return view('admin.logistics.create');
+        $logisticTypes = LogisticType::select(['id','name'])->get();
+
+        return view('admin.logistics.create', compact('logisticTypes'));
     }
 
     /**
@@ -39,11 +42,15 @@ class LogisticController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'  =>  ['required','max:50'],
+            'amount'            =>  ['required','max:50'],
+            'logistic_type_id' =>  ['required','exists:logistic_types,id'],
+            'remark'            =>  ['nullable'],
         ]);
 
         Logistic::create([
-            'name'  =>  $request->name,
+            'amount'            =>  $request->amount,
+            'logistic_type_id' =>  $request->logistic_type_id,
+            'remark'            =>  $request->remark,
         ]);
 
         return redirect()->route('admin.logistics.index')
@@ -69,7 +76,9 @@ class LogisticController extends Controller
      */
     public function edit(Logistic $logistic)
     {
-        return view('admin.logistics.edit', compact('logistic'));
+        $logisticTypes = LogisticType::select(['id','name'])->get();
+
+        return view('admin.logistics.edit', compact('logistic','logisticTypes'));
     }
 
     /**
@@ -82,13 +91,16 @@ class LogisticController extends Controller
     public function update(Request $request, Logistic $logistic)
     {
         $request->validate([
-            'name'  =>  ['required','max:50'],
+            'amount'            =>  ['required','max:50'],
+            'logistic_type_id' =>  ['required','exists:logistic_types,id'],
+            'remark'            =>  ['nullable'],
         ]);
 
         $logistic->update([
-            'name'  =>  $request->name,
+            'amount'            =>  $request->amount,
+            'logistic_type_id' =>  $request->logistic_type_id,
+            'remark'            =>  $request->remark,
         ]);
-
         return redirect()->route('admin.logistics.index')
             ->with('success', 'Logistic has been updated successfully !! ');
     }

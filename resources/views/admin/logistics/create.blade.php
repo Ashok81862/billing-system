@@ -4,6 +4,15 @@
 
 @section('plugins.Select2', true)
 
+@push('js')
+<script>
+    $(document).ready(function() {
+        $('#logistic_type_id').select2();
+    });
+</script>
+@endpush
+
+
 @section('content')
 <x-alert />
 
@@ -21,15 +30,47 @@
         <form action="{{ route('admin.logistics.store') }}" method="POST">
             @csrf
             <div class="form-group">
-                <label for="name">Name</label>
+                <label for="amount">Amount</label>
                 <input
-                    type="text"
-                    name="name" id="name"
-                    value="{{ old('name') ?? '' }}"
-                    class="form-control @error('name') is-invalid @enderror"
+                    type="number"
+                    name="amount" id="amount"
+                    value="{{ old('amount') ?? '' }}"
+                    class="form-control @error('amount') is-invalid @enderror"
                     autofocus
                 >
-                @error('name')
+                @error('amount')
+                    <small class="form-text text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="logistic_type_id">Type</label>
+                <select
+                    name="logistic_type_id" id="logistic_type_id"
+                    class="form-control @error('logistic_type_id') is-invalid @enderror"
+                >
+                    @foreach($logisticTypes as $type)
+                        <option
+                            value="{{ $type->id }}"
+                            @if(old('logistic_type_id') == $type->id) selected @endif
+                        >{{ $type->name }}</option>
+                    @endforeach
+                </select>
+
+                @error('logistic_type_id')
+                <small class="form-text text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+
+
+            <div class="form-group">
+                <label for="remark">Remarks</label>
+                <textarea
+                    name="remark" id="remark"
+                    class="form-control @error('remark') is-invalid @enderror"
+                    autofocus
+                >{{ old('remark') ?? '' }}</textarea>
+                @error('remark')
                     <small class="form-text text-danger">{{ $message }}</small>
                 @enderror
             </div>
