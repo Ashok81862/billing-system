@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Billing System',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>Billing</b>System',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -85,8 +85,8 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
+    'layout_fixed_sidebar' => true,
+    'layout_fixed_navbar' => true,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
 
@@ -238,85 +238,72 @@ return [
 
         // Sidebar items:
         [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'Dashboard',
+            'url'  => '/admin',
+            'icon' => 'nav-icon fas fa-fw fa-tachometer-alt',
         ],
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'text' => 'Users',
+            'url'  => '/admin/users',
+            'icon' => 'nav-icon fas fa-fw fa-users',
         ],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
+            'text' => 'Products',
+            'url'  => '/admin/products',
+            'icon' => 'nav-icon fas fa-fw fa-cart-plus',
         ],
         [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => 'Customers',
+            'url'  => '/admin/customers',
+            'icon' => 'nav-icon fas fa-fw fa-people-arrows',
         ],
         [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
+            'text' => 'Orders',
+            'url'  => '/admin/orders',
+            'icon' => 'nav-icon fas fa-fw fa-cookie',
+        ],
+        [
+            'text' => 'Stocks',
+            'url'  => '/admin/stocks',
+            'icon' => 'nav-icon fas fa-fw fa-database',
+        ],
+        [
+            'text' => 'Vendors',
+            'url'  => '/admin/vendors',
+            'icon' => 'nav-icon fas fa-fw fa-business-time',
+        ],
+        [
+            'text' => 'Batches',
+            'url'  => '/admin/batches',
+            'icon' => 'nav-icon fas fa-fw fa-money-check-alt',
+        ],
+        [
+            'text'        => 'More Features',
+            'url'         => '#',
+            'icon'        => 'nav-icon fas fa-fw fa-grip-vertical',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'Units',
+                    'icon' => 'nav-icon fas fa-fw fa-clipboard-list',
+                    'url' => '/admin/units',
                 ],
                 [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
+                    'text' => 'Categories',
+                    'icon' => 'nav-icon fas fa-fw fa-cubes',
+                    'url' => '/admin/categories',
                 ],
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'Logistics',
+                    'icon' => 'nav-icon fas fa-fw fa-asterisk',
+                    'url' => '/admin/logistics',
                 ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
+                [
+                    'text' => 'Employees',
+                    'icon' => 'nav-icon fas fa-fw fa-users',
+                    'url' => '/admin/employees',
+                ],
+            ]
+
         ],
     ],
 
