@@ -26,4 +26,6 @@ Route::middleware([ 'admin',])->prefix('admin')->name('admin.')->group(function(
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
 
     Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
+
+    Route::resource('customers', \App\Http\Controllers\Admin\CustomerController::class);
 });
