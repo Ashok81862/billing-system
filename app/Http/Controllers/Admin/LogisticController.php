@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Logistic;
 use Illuminate\Http\Request;
 
 class LogisticController extends Controller
@@ -14,7 +15,9 @@ class LogisticController extends Controller
      */
     public function index()
     {
-        //
+        $logistics = Logistic::select(['id','name'])->paginate(10);
+
+        return view('admin.logistics.index', compact('logistics'));
     }
 
     /**
@@ -24,7 +27,7 @@ class LogisticController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.logistics.create');
     }
 
     /**
@@ -35,7 +38,16 @@ class LogisticController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'  =>  ['required','max:50'],
+        ]);
+
+        Logistic::create([
+            'name'  =>  $request->name,
+        ]);
+
+        return redirect()->route('admin.logistics.index')
+            ->with('success', 'New Logistic has been created successfully !! ');
     }
 
     /**
@@ -55,9 +67,9 @@ class LogisticController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Logistic $logistic)
     {
-        //
+        return view('admin.logistics.edit', compact('logistic'));
     }
 
     /**
@@ -67,9 +79,18 @@ class LogisticController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Logistic $logistic)
     {
-        //
+        $request->validate([
+            'name'  =>  ['required','max:50'],
+        ]);
+
+        $logistic->update([
+            'name'  =>  $request->name,
+        ]);
+
+        return redirect()->route('admin.logistics.index')
+            ->with('success', 'Logistic has been updated successfully !! ');
     }
 
     /**
@@ -78,8 +99,11 @@ class LogisticController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Logistic $logistic)
     {
-        //
+        $logistic->delete();
+
+        return redirect()->route('admin.logistics.index')
+            ->with('success', 'Logistic has been deleted successfully !! ');
     }
 }
