@@ -32,4 +32,6 @@ Route::middleware([ 'admin',])->prefix('admin')->name('admin.')->group(function(
     Route::resource('units', \App\Http\Controllers\Admin\UnitController::class);
 
     Route::resource('logistics', \App\Http\Controllers\Admin\LogisticController::class);
+
+    Route::resource('employees', \App\Http\Controllers\Admin\EmployeeController::class);
 });
