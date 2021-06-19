@@ -15,7 +15,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::select(['id','name','reg_number','address'])->paginate(10);
+        $customers = Customer::select(['id','name','phone','reg_number','address','remark'])->paginate(10);
 
         return view('admin.customers.index', compact('customers'));
     }
@@ -40,18 +40,18 @@ class CustomerController extends Controller
     {
         $request->validate([
             'name'          =>  ['required','max:50'],
-            'reg_number'    =>   ['required','integer'],
+            'reg_number'    =>   ['required','unique:customers,reg_number','integer'],
             'remark'        =>  ['nullable'],
             'address'       =>  ['required','string'],
-            'contact'       =>  ['required'],
+            'phone'       =>  ['required'],
         ]);
 
         Customer::create([
             'name'          =>  $request->name,
             'reg_number'    =>  $request->reg_number,
-            'remarks'       =>  $request->remarks,
+            'remark'       =>  $request->remark,
             'address'       =>  $request->address,
-            'contact'       =>  $request->contact,
+            'phone'       =>  $request->phone,
         ]);
 
         return redirect()
@@ -92,18 +92,18 @@ class CustomerController extends Controller
     {
         $request->validate([
             'name'          =>  ['required','max:50'],
-            'reg_number'    =>   ['required','integer'],
+            'reg_number'    =>   ['required','unique:customers,reg_number','integer'],
             'remark'        =>  ['nullable'],
             'address'       =>  ['required','string'],
-            'contact'       =>  ['required'],
+            'phone'       =>  ['required'],
         ]);
 
         $customer->update([
             'name'          =>  $request->name,
             'reg_number'    =>  $request->reg_number,
-            'remarks'       =>  $request->remarks,
+            'remark'       =>  $request->remark,
             'address'       =>  $request->address,
-            'contact'       =>  $request->contact,
+            'phone'       =>  $request->phone,
         ]);
 
         return redirect()

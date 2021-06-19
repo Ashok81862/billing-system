@@ -19,7 +19,7 @@ class CreateCustomersTable extends Migration
             $table->string('address');
             $table->string('phone');
             $table->integer('reg_number');
-            $table->longText('remark');
+            $table->longText('remark')->nullable();
             $table->timestamps();
         });
     }
