@@ -24,4 +24,6 @@ Route::middleware([ 'admin',])->prefix('admin')->name('admin.')->group(function(
     Route::get('/', [\App\Http\Controllers\Admin\AdminController::class, 'index']);
 
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+
+    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
 });
