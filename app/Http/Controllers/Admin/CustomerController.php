@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -14,7 +15,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        $customers = Customer::select(['id','name','reg_number','address'])->paginate(10);
+
+        return view('admin.customers.index', compact('customers'));
     }
 
     /**
@@ -24,7 +27,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.customers.create');
     }
 
     /**
@@ -35,7 +38,25 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'          =>  ['required','max:50'],
+            'reg_number'    =>   ['required','integer'],
+            'remark'        =>  ['nullable'],
+            'address'       =>  ['required','string'],
+            'contact'       =>  ['required'],
+        ]);
+
+        Customer::create([
+            'name'          =>  $request->name,
+            'reg_number'    =>  $request->reg_number,
+            'remarks'       =>  $request->remarks,
+            'address'       =>  $request->address,
+            'contact'       =>  $request->contact,
+        ]);
+
+        return redirect()
+            ->route('admin.customers.index')
+            ->with('success','New Customer has been created successfully');
     }
 
     /**
@@ -44,9 +65,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Customer $customer)
     {
-        //
+        return view('admin.customers.show', compact('customer'));
     }
 
     /**
@@ -55,9 +76,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Customer $customer)
     {
-        //
+        return view('admin.customers.edit', compact('customer'));
     }
 
     /**
@@ -67,9 +88,27 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Customer $customer)
     {
-        //
+        $request->validate([
+            'name'          =>  ['required','max:50'],
+            'reg_number'    =>   ['required','integer'],
+            'remark'        =>  ['nullable'],
+            'address'       =>  ['required','string'],
+            'contact'       =>  ['required'],
+        ]);
+
+        $customer->update([
+            'name'          =>  $request->name,
+            'reg_number'    =>  $request->reg_number,
+            'remarks'       =>  $request->remarks,
+            'address'       =>  $request->address,
+            'contact'       =>  $request->contact,
+        ]);
+
+        return redirect()
+            ->route('admin.customers.index')
+            ->with('success','Customer has been updated successfully');
     }
 
     /**
@@ -78,8 +117,12 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Customer $customer)
     {
-        //
+        $customer->delete();
+
+        return redirect()
+            ->route('admin.customers.index')
+            ->with('success','Customer has been deleted successfully');
     }
 }
