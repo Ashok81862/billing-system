@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users  = User::select(['id','name','email','password','role','is_active'])->paginate(10);
+        $users  = User::select(['id','name','email','password','role'])->paginate(10);
 
         return view('admin.users.index', compact('users'));
     }
