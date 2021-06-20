@@ -33,36 +33,49 @@
                 @enderror
             </div>
 
-           <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <label for="price">Price</label>
-                    <input
-                        type="number"
-                        name="price" id="price"
-                        value="{{ old('price') ?? $product->price }}"
-                        class="form-control @error('price') is-invalid @enderror"
-                    >
-                    @error('price')
-                    <small class="form-text text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input
+                    type="number"
+                    name="price" id="price"
+                    value="{{ old('price') ?? $product->price }}"
+                    class="form-control @error('price') is-invalid @enderror"
+                >
+                @error('price')
+                <small class="form-text text-danger">{{ $message }}</small>
+                @enderror
             </div>
-               <div class="col">
-                <div class="form-group">
-                    <label for="sale_price">Sale Price</label>
+
+            <div class="form-group mb-1">
+                <label for="on_sale">
                     <input
-                        type="number"
-                        name="sale_price" id="sale_price"
-                        value="{{ old('sale_price') ?? $product->sale_price }}"
-                        class="form-control @error('sale_price') is-invalid @enderror"
+                        type="checkbox"
+                        name="on_sale" id="on_sale"
+                        value="1"
+                        @if(old('on_sale') || $product->on_sale) checked @endif
+                        onchange="toggleSalePrice()"
                     >
-                    @error('sale_price')
-                    <small class="form-text text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-               </div>
-           </div>
+
+                    <span class="ml-2">On Sale?</span>
+
+                </label>
+                @error('on_sale')
+                <small class="form-text text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+
+            <div class="form-group" id="sp">
+                <label for="sale_price">Price on Sale</label>
+                <input
+                    type="text"
+                    name="sale_price" id="sale_price"
+                    value="{{ old('sale_price') ?? $product->sale_price }}"
+                    class="form-control @error('sale_price') is-invalid @enderror"
+                >
+                @error('sale_price')
+                <small class="form-text text-danger">{{ $message }}</small>
+                @enderror
+            </div>
 
            <div class="form-group">
             <label for="unit_id">Unit </label>
