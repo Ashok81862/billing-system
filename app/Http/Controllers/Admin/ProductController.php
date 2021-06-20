@@ -44,7 +44,8 @@ class ProductController extends Controller
         $request->validate([
             'name'          =>  ['required','max:50'],
             'price'         =>  ['required','integer'],
-            'sale_price'    =>  ['nullable','integer'],
+            'on_sale'       => 'nullable|boolean',
+            'sale_price'    =>  ['nullable','required_if:on_sale,1','numeric','lt:price'],
             'body'          =>  ['nullable'],
             'unit_id'       =>  ['required','exists:units,id']
         ]);
@@ -52,9 +53,10 @@ class ProductController extends Controller
         Product::create([
             'name'      =>    $request->name,
             'price'     =>    $request->price,
-            'sale_price'=>    $request->sale_price ? $request->sale_price : 0 ,
+            'on_sale'   =>    $request->on_sale && !empty($request->sale_price),
+            'sale_price'=>    $request->sale_price,
             'body'      =>    $request->body,
-            'unit_id'=>    $request->unit_id,
+            'unit_id'   =>    $request->unit_id,
         ]);
 
         return redirect()->route('admin.products.index')
@@ -97,7 +99,8 @@ class ProductController extends Controller
         $request->validate([
             'name'          =>  ['required','max:50'],
             'price'         =>  ['required','integer'],
-            'sale_price'    =>  ['nullable','integer'],
+            'on_sale'       => 'nullable|boolean',
+            'sale_price'    =>  ['nullable','required_if:on_sale,1','numeric','lt:price'],
             'body'          =>  ['nullable'],
             'unit_id'       =>  ['required','exists:units,id']
         ]);
@@ -105,9 +108,10 @@ class ProductController extends Controller
         $product->update([
             'name'      =>    $request->name,
             'price'     =>    $request->price,
+            'on_sale'   =>    $request->on_sale && !empty($request->sale_price),
             'sale_price'=>    $request->sale_price,
             'body'      =>    $request->body,
-            'unit_id'=>    $request->unit_id,
+            'unit_id'   =>    $request->unit_id,
         ]);
 
         return redirect()->route('admin.products.index')
