@@ -23,7 +23,7 @@ class LogisticFactory extends Factory
     {
         $logistic_type_id = mt_rand(1,15);
         $amount =  mt_rand(1000,10000);
-        $remark = $this->faker->word(mt_rand(1,20),true);
+        $remark = $this->faker->paragraph(2);
 
         return [
             'logistic_type_id'  =>  $logistic_type_id,
