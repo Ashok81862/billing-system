@@ -39,7 +39,7 @@
                             Unknown
                         @endif
                     </td>
-                    <td>{{ $order->product->name }}/{{ $order->product->price }}</td>
+                    <td>{{ $order->product->name }} / Rs.{{ $order->product->price }}</td>
                     <td>{{ $order->quantity }}</td>
                     <td>
                         <!-- Show -->
