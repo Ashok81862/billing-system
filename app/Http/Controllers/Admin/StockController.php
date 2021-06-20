@@ -28,7 +28,7 @@ class StockController extends Controller
      */
     public function create()
     {
-        $products = Product::select(['id','name'])->get();
+        $products = Product::select(['id','name','price'])->get();
 
         return view('admin.stocks.create', compact('products'));
     }
@@ -76,9 +76,9 @@ class StockController extends Controller
      */
     public function edit(Stock $stock)
     {
-        $products = Product::select(['id','name'])->get();
+        $products = Product::select(['id','name','price'])->get();
 
-        return view('admin.stocks.create', compact('products','stock'));
+        return view('admin.stocks.edit', compact('products','stock'));
     }
 
     /**
