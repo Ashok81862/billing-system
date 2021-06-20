@@ -40,4 +40,6 @@ Route::middleware([ 'admin',])->prefix('admin')->name('admin.')->group(function(
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
 
     Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
+
+    Route::resource('stocks', \App\Http\Controllers\Admin\StockController::class);
 });
