@@ -84,12 +84,12 @@
         </div>
 
             <div class="form-group">
-                <label for="remark">Remarks</label>
+                <label for="body">Description</label>
                 <textarea
-                    name="remark" id="remark"
-                    class="form-control @error('remark') is-invalid @enderror"
-                >{{ old('remark') ?? '' }}</textarea>
-                @error('remark')
+                    name="body" id="body"
+                    class="form-control @error('body') is-invalid @enderror"
+                >{{ old('body') ?? '' }}</textarea>
+                @error('body')
                 <small class="form-text text-danger">{{ $message }}</small>
                 @enderror
             </div>
