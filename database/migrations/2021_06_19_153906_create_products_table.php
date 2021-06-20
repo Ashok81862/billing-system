@@ -18,7 +18,8 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->foreignId('unit_id');
             $table->integer('price');
-            $table->integer('sale_price')->nullable();
+            $table->boolean('on_sale')->default(0);
+            $table->string('sale_price')->nullable();
             $table->longText('body')->nullable();
             $table->timestamps();
         });
