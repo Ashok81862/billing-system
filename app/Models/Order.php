@@ -13,7 +13,7 @@ class Order extends Model
 
     public function product()
     {
-        return $this->call(Product::class);
+        return $this->belongsTo(Product::class);
     }
 
     public function customer()

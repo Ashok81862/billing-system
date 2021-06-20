@@ -31,7 +31,7 @@ class OrderController extends Controller
     {
         $products = Product::select(['id','name','price'])->get();
 
-        $customer = Customer::select(['id','name'])->get();
+        $customers = Customer::select(['id','name'])->get();
 
         return view('admin.orders.create', compact('products', 'customers'));
     }
@@ -81,7 +81,7 @@ class OrderController extends Controller
     {
         $products = Product::select(['id','name','price'])->get();
 
-        $customer = Customer::select(['id','name'])->get();
+        $customers = Customer::select(['id','name'])->get();
 
         return view('admin.orders.edit', compact('products', 'customers','order'));
     }
