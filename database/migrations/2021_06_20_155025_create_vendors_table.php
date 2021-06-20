@@ -20,7 +20,7 @@ class CreateVendorsTable extends Migration
             $table->string('phone');
             $table->integer('reg_number');
             $table->longText('remark')->nullable();
-            $table->foreignId('customer_id');
+            $table->foreignId('category_id');
             $table->timestamps();
         });
     }
