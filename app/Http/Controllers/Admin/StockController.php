@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Stock;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class StockController extends Controller
 {
@@ -14,7 +16,9 @@ class StockController extends Controller
      */
     public function index()
     {
-        //
+        $stocks = Stock::with(['product'])->paginate(10);
+
+        return view('admin.stocks.index', compact('stocks'));
     }
 
     /**
@@ -24,7 +28,9 @@ class StockController extends Controller
      */
     public function create()
     {
-        //
+        $products = Product::select(['id','name'])->get();
+
+        return view('admin.stocks.create', compact('products'));
     }
 
     /**
@@ -35,7 +41,20 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'product_id'    =>  ['required','exists:products,id'],
+            'quantity'      =>  ['required','integer'],
+            'remark'        =>  ['nullable'],
+        ]);
+
+        Stock::create([
+            'product_id'    =>  $request->product_id,
+            'quantity'      =>  $request->quantity,
+            'remark'        =>  $request->remark
+        ]);
+
+        return redirect()->route('admin.stocks.index')
+            ->with('success', 'New Stock has been created successfully !!');
     }
 
     /**
@@ -44,9 +63,9 @@ class StockController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Stock $stock)
     {
-        //
+        return view('admin.stocks.show', compact('stock'));
     }
 
     /**
@@ -55,9 +74,11 @@ class StockController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Stock $stock)
     {
-        //
+        $products = Product::select(['id','name'])->get();
+
+        return view('admin.stocks.create', compact('products','stock'));
     }
 
     /**
@@ -67,9 +88,22 @@ class StockController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Stock $stock)
     {
-        //
+        $request->validate([
+            'product_id'    =>  ['required','exists:products,id'],
+            'quantity'      =>  ['required','integer'],
+            'remark'        =>  ['nullable'],
+        ]);
+
+        $stock->update([
+            'product_id'    =>  $request->product_id,
+            'quantity'      =>  $request->quantity,
+            'remark'        =>  $request->remark
+        ]);
+
+        return redirect()->route('admin.stocks.index')
+            ->with('success', 'Stock has been updated successfully !!');
     }
 
     /**
@@ -78,8 +112,12 @@ class StockController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Stock $stock)
     {
-        //
+        $stock->delete();
+
+
+        return redirect()->route('admin.stocks.index')
+            ->with('success', 'Stock has been deleted successfully !!');
     }
 }
