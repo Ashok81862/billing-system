@@ -42,4 +42,6 @@ Route::middleware([ 'admin',])->prefix('admin')->name('admin.')->group(function(
     Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
 
     Route::resource('stocks', \App\Http\Controllers\Admin\StockController::class);
+
+    Route::resource('vendors', \App\Http\Controllers\Admin\VendorController::class);
 });
