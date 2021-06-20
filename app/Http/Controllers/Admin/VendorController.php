@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class VendorController extends Controller
      */
     public function index()
     {
-        $vendors = Vendor::with(['customer'])->paginate(10);
+        $vendors = Vendor::with(['category'])->paginate(10);
 
         return view('admin.vendors.index', compact('vendors'));
     }
@@ -28,9 +29,9 @@ class VendorController extends Controller
      */
     public function create()
     {
-        $customers = Customer::select(['id','name'])->get();
+        $categories = Category::select(['id','name'])->get();
 
-        return view('admin.vendors.create', compact('customers'));
+        return view('admin.vendors.create', compact('categories'));
     }
 
     /**
@@ -47,7 +48,7 @@ class VendorController extends Controller
             'remark'        =>  ['nullable'],
             'address'       =>  ['nullable','string'],
             'phone'         =>  ['required'],
-            'category_id'   =>  ['required','exits:categories,id'],
+            'category_id'   =>  ['required','exists:categories,id'],
         ]);
 
         Vendor::create([
@@ -83,9 +84,9 @@ class VendorController extends Controller
      */
     public function edit(Vendor $vendor)
     {
-        $customers = Customer::select(['id','name'])->get();
+        $categories = Category::select(['id','name'])->get();
 
-        return view('admin.vendors.edit', compact('customers','vendor'));
+        return view('admin.vendors.edit', compact('categories','vendor'));
     }
 
     /**
@@ -99,11 +100,11 @@ class VendorController extends Controller
     {
         $request->validate([
             'name'          =>  ['required','max:50'],
-            'reg_number'    =>   ['required','unique:vendors,reg_number','integer'],
+            'reg_number'    =>   ['required','unique:vendors,reg_number,'.$vendor->id,'integer'],
             'remark'        =>  ['nullable'],
             'address'       =>  ['nullable','string'],
             'phone'         =>  ['required'],
-            'category_id'   =>  ['required','exits:categories,id'],
+            'category_id'   =>  ['required','exists:categories,id'],
         ]);
 
         $vendor->update([
@@ -117,7 +118,7 @@ class VendorController extends Controller
 
         return redirect()
             ->route('admin.vendors.index')
-            ->with('success','New Vendor has been updated successfully');
+            ->with('success','Vendor has been updated successfully');
     }
 
     /**

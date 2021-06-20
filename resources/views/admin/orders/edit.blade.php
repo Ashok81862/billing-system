@@ -47,7 +47,7 @@
                         @endforeach
                     </select>
 
-                    @error('unit_id')
+                    @error('customer_id')
                     <small class="form-text text-danger">{{ $message }}</small>
                     @enderror
             </div>
@@ -67,7 +67,7 @@
                         @endforeach
                     </select>
 
-                    @error('unit_id')
+                    @error('product_id')
                     <small class="form-text text-danger">{{ $message }}</small>
                     @enderror
             </div>

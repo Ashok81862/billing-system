@@ -92,7 +92,7 @@ class CustomerController extends Controller
     {
         $request->validate([
             'name'          =>  ['required','max:50'],
-            'reg_number'    =>   ['required','unique:customers,reg_number','integer'],
+            'reg_number'    =>   ['required','unique:customers,reg_number,'.$customer->id,'integer'],
             'remark'        =>  ['nullable'],
             'address'       =>  ['required','string'],
             'phone'       =>  ['required'],

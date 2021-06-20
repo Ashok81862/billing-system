@@ -11,8 +11,8 @@ class Vendor extends Model
 
     protected $guarded = [];
 
-    public function customer()
+    public function category()
     {
-        $this->belongsTo(Customer::class);
+        return $this->belongsTo(Category::class);
     }
 }
