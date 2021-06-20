@@ -129,6 +129,10 @@ class VendorController extends Controller
      */
     public function destroy(Vendor $vendor)
     {
-        //
+        $vendor->delete();
+
+        return redirect()
+            ->route('admin.vendors.index')
+            ->with('success','Vendor has been deleted successfully');
     }
 }
