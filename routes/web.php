@@ -56,4 +56,9 @@ Route::middleware([ 'admin',])->prefix('admin')->name('admin.')->group(function(
         Route::resource('vendors', \App\Http\Controllers\Admin\VendorController::class);
 
         Route::resource('sales', \App\Http\Controllers\Admin\SaleController::class);
+
+        Route::put('batches/{batch}/products', [\App\Http\Controllers\Admin\BatchController::class,'addProduct'])->name('batches.products.store');
+        Route::delete('batches/{batch}/products', [\App\Http\Controllers\Admin\BatchController::class,'removeProduct'])->name('batches.products.remove');
+
+        Route::resource('batches', \App\Http\Controllers\Admin\BatchController::class);
 });
