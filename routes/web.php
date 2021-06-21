@@ -39,11 +39,21 @@ Route::middleware([ 'admin',])->prefix('admin')->name('admin.')->group(function(
 
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
 
-    Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
+    Route::put('/{order}/customers/assign', [OrderController::class, 'assignCustomer'])->name('customers.assign');
+        Route::put('/{order}/customers/create', [OrderController::class, 'createCustomerAndAssign'])->name('customers.create');
+        Route::put('/{order}/customers/remove', [OrderController::class, 'removeCustomer'])->name('customers.remove');
 
-    Route::resource('stocks', \App\Http\Controllers\Admin\StockController::class);
+        Route::put('/{order}/add', [OrderController::class, 'addProduct'])->name('add');
+        Route::delete('/{order}/{orderProduct}/remove', [OrderController::class, 'removeProduct'])->name('remove');
+        Route::put('/{order}/quantity', [OrderController::class, 'updateQuantity'])->name('quantity');
+        Route::put('/{order}/discount', [OrderController::class, 'discount'])->name('discount');
+        Route::put('/{order}/final', [OrderController::class, 'final'])->name('final');
 
-    Route::resource('vendors', \App\Http\Controllers\Admin\VendorController::class);
+        Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
 
-    Route::resource('sales', \App\Http\Controllers\Admin\SaleController::class);
+        Route::resource('stocks', \App\Http\Controllers\Admin\StockController::class);
+
+        Route::resource('vendors', \App\Http\Controllers\Admin\VendorController::class);
+
+        Route::resource('sales', \App\Http\Controllers\Admin\SaleController::class);
 });
