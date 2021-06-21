@@ -15,9 +15,12 @@ class CreateStocksTable extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id');
-            $table->longText('remark')->nullable();
-            $table->integer('quantity');
+            $table->foreignId('product_id')->constrained('products');
+            $table->foreignId('user_id')->nullable()->constrained('users');
+            //$table->foreignId('batch_id')->nullable()->constrained('batches');
+            $table->unsignedBigInteger('sale_id')->nullable();
+            $table->string('quantity');
+            $table->text('remarks')->nullable();
             $table->timestamps();
         });
     }

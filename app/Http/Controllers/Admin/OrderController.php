@@ -23,8 +23,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with(['product','customer','orderProducts'])->paginate(10);
-
+        $orders = Order::with(['Product','orderProducts'])->paginate(10);
         return view('admin.orders.index', compact('orders'));
     }
 
@@ -51,10 +50,11 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'customer_id'   =>  ['nullable','exists:customers,id'],
-            'product_id'    =>  ['required','exists:products,id'],
-            'quantity'      =>  ['required','integer'],
+            'customer_id' => 'nullable|exists:customers,id',
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|numeric|min:0',
         ]);
+
 
         $order = Order::create([
             'customer_id'   =>  $request->customer_id,
@@ -89,10 +89,11 @@ class OrderController extends Controller
     {
         $products = Product::select(['id','name','price'])->get();
         $orderProducts = OrderProduct::with('product')->where('order_id', $order->id)->get();
+        $customer = $order->customer_id ? $order->customer : false;
 
         $customers = Customer::select(['id','name'])->get();
 
-        return view('admin.orders.edit', compact('products', 'customers','order'));
+        return view('admin.orders.edit', compact('products','customer', 'customers','order','orderProducts'));
     }
 
     /**

@@ -39,15 +39,15 @@ Route::middleware([ 'admin',])->prefix('admin')->name('admin.')->group(function(
 
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
 
-    Route::put('/{order}/customers/assign', [OrderController::class, 'assignCustomer'])->name('customers.assign');
-        Route::put('/{order}/customers/create', [OrderController::class, 'createCustomerAndAssign'])->name('customers.create');
-        Route::put('/{order}/customers/remove', [OrderController::class, 'removeCustomer'])->name('customers.remove');
+    Route::put('/{order}/customers/assign', [\App\Http\Controllers\Admin\OrderController::class, 'assignCustomer'])->name('orders.customers.assign');
+        Route::put('/{order}/customers/create', [\App\Http\Controllers\Admin\OrderController::class, 'createCustomerAndAssign'])->name('orders.customers.create');
+        Route::put('/{order}/customers/remove', [\App\Http\Controllers\Admin\OrderController::class, 'removeCustomer'])->name('orders.customers.remove');
 
-        Route::put('/{order}/add', [OrderController::class, 'addProduct'])->name('add');
-        Route::delete('/{order}/{orderProduct}/remove', [OrderController::class, 'removeProduct'])->name('remove');
-        Route::put('/{order}/quantity', [OrderController::class, 'updateQuantity'])->name('quantity');
-        Route::put('/{order}/discount', [OrderController::class, 'discount'])->name('discount');
-        Route::put('/{order}/final', [OrderController::class, 'final'])->name('final');
+        Route::put('/{order}/add', [\App\Http\Controllers\Admin\OrderController::class, 'addProduct'])->name('orders.add');
+        Route::delete('/{order}/{orderProduct}/remove', [\App\Http\Controllers\Admin\OrderController::class, 'removeProduct'])->name('orders.remove');
+        Route::put('/{order}/quantity', [\App\Http\Controllers\Admin\OrderController::class, 'updateQuantity'])->name('orders.quantity');
+        Route::put('/{order}/discount', [\App\Http\Controllers\Admin\OrderController::class, 'discount'])->name('orders.discount');
+        Route::put('/{order}/final', [\App\Http\Controllers\Admin\OrderController::class, 'final'])->name('orders.final');
 
         Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
 

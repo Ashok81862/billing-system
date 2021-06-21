@@ -23,8 +23,10 @@
                 <tr>
                     <th>ID</th>
                     <th>Customer</th>
-                    <th>Product</th>
-                    <th>Quantity</th>
+                    <th>Products</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -36,37 +38,24 @@
                         @if($order->customer_id)
                             {{ $order->customer->name }}
                         @else
-                            Unknown
+                            General
                         @endif
                     </td>
-                    <td>{{ $order->product->name }} / Rs.{{ $order->product->price }}</td>
-                    <td>{{ $order->quantity }}</td>
                     <td>
-                        <!-- Show -->
-                        <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-primary btn-sm">
-                            <i class="fas fa-fw fa-eye mr-1"></i>
-                            <span>Show</span>
-                        </a>
-
-                        <!-- Edit -->
-                        <a href="{{ route('admin.orders.edit', $order->id) }}" class="btn btn-primary btn-sm">
-                            <i class="fas fa-fw fa-edit mr-1"></i>
-                            <span>Edit</span>
-                        </a>
-
-                        <!-- Delete -->
-                        <a href="#" onclick="confirmDelete({{ $order->id }})" class="btn btn-danger btn-sm">
-                            <i class="fas fa-fw fa-edit mr-1"></i>
-                            <span>Delete</span>
-                        </a>
-
-                        <!-- Delete Form -->
-                        <form id="delete-form-{{ $order->id }}" action="{{ route('admin.orders.destroy', $order->id) }}" method="post">
-                            @csrf @method('DELETE')
-                        </form>
+                        @if($order->products)
+                            {{ $order->products->count()}}
+                        @else
+                            No Product
+                        @endif
+                    </td>
+                    <td>Rs. {{ $order->total }}</td>
+                    <td>{{ $order->status }}</td>
+                    <td>{{ $order->created_at }}</td>
+                    <td>
+                        <a href="{{ route('admin.orders.edit', $order->id) }}" class="btn btn-sm btn-primary">Edit</a>
                     </td>
                 </tr>
-                @endforeach
+            @endforeach
             </tbody>
         </table>
     </div>
