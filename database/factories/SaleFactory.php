@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Order;
+use App\Models\Sale;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class OrderFactory extends Factory
+class SaleFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Order::class;
+    protected $model = Sale::class;
 
     /**
      * Define the model's default state.
@@ -21,14 +21,9 @@ class OrderFactory extends Factory
      */
     public function definition()
     {
-        $customer_id = mt_rand(1,15);
-        $sub_total = mt_rand(100,1000);
-        $total = $sub_total +  mt_rand(100,1000);
-
+        $order_id = mt_rand(1,20);
         return [
-            'customer_id'   =>  $customer_id,
-            'sub_total' => $sub_total,
-            'total' => $total,
+            'order_id'  =>  $order_id
         ];
     }
 }
