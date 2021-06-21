@@ -39,9 +39,21 @@ Route::middleware([ 'admin',])->prefix('admin')->name('admin.')->group(function(
 
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
 
-    Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
+    Route::put('/{order}/customers/assign', [\App\Http\Controllers\Admin\OrderController::class, 'assignCustomer'])->name('orders.customers.assign');
+        Route::put('/{order}/customers/create', [\App\Http\Controllers\Admin\OrderController::class, 'createCustomerAndAssign'])->name('orders.customers.create');
+        Route::put('/{order}/customers/remove', [\App\Http\Controllers\Admin\OrderController::class, 'removeCustomer'])->name('orders.customers.remove');
 
-    Route::resource('stocks', \App\Http\Controllers\Admin\StockController::class);
+        Route::put('/{order}/add', [\App\Http\Controllers\Admin\OrderController::class, 'addProduct'])->name('orders.add');
+        Route::delete('/{order}/{orderProduct}/remove', [\App\Http\Controllers\Admin\OrderController::class, 'removeProduct'])->name('orders.remove');
+        Route::put('/{order}/quantity', [\App\Http\Controllers\Admin\OrderController::class, 'updateQuantity'])->name('orders.quantity');
+        Route::put('/{order}/discount', [\App\Http\Controllers\Admin\OrderController::class, 'discount'])->name('orders.discount');
+        Route::put('/{order}/final', [\App\Http\Controllers\Admin\OrderController::class, 'final'])->name('orders.final');
 
-    Route::resource('vendors', \App\Http\Controllers\Admin\VendorController::class);
+        Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
+
+        Route::resource('stocks', \App\Http\Controllers\Admin\StockController::class);
+
+        Route::resource('vendors', \App\Http\Controllers\Admin\VendorController::class);
+
+        Route::resource('sales', \App\Http\Controllers\Admin\SaleController::class);
 });

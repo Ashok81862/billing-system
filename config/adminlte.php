@@ -307,6 +307,11 @@ return [
                     'icon' => 'nav-icon fas fa-fw fa-users',
                     'url' => '/admin/employees',
                 ],
+                [
+                    'text' => 'Sales',
+                    'icon' => 'nav-icon fas fa-fw fa-shopping-basket',
+                    'url' => '/admin/sales',
+                ],
             ]
 
         ],
