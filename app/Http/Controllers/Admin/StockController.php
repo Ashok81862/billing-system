@@ -50,7 +50,7 @@ class StockController extends Controller
         Stock::create([
             'product_id'    =>  $request->product_id,
             'quantity'      =>  $request->quantity,
-            'remark'        =>  $request->remark
+            'remarks'        =>  $request->remark
         ]);
 
         return redirect()->route('admin.stocks.index')
@@ -99,7 +99,7 @@ class StockController extends Controller
         $stock->update([
             'product_id'    =>  $request->product_id,
             'quantity'      =>  $request->quantity,
-            'remark'        =>  $request->remark
+            'remarks'        =>  $request->remark
         ]);
 
         return redirect()->route('admin.stocks.index')

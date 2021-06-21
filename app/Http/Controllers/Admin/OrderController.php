@@ -199,7 +199,7 @@ class OrderController extends Controller
         if ($this->checkPending($order)) return back();
 
         $request->validate([
-            'order_product_id' => 'required|exists:order_product,id',
+            'order_product_id' => 'required|exists:order_products,id',
             'quantity' => 'required|numeric|min:0'
         ]);
 
