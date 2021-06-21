@@ -17,7 +17,6 @@
                     <th>Payment Method</th>
                     <th>Total</th>
                     <th>Date</th>
-                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -30,22 +29,8 @@
                             </a>
                         </td>
                         <td>{{ $sale->payment_method }}</td>
-                        <td>Rs. {{ money($sale->total) }}</td>
+                        <td>Rs. {{ $sale->total }}</td>
                         <td>{{ $sale->created_at }}</td>
-                        <td>
-                            <a
-                                href="{{ route('admin.orders.print', $sale->order_id) }}"
-                                class="btn btn-info btn-sm"
-                            >
-                                <i class="fas fa-print fa-fw mr-2"></i> Print
-                            </a>
-                            <a
-                                href="{{ route('admin.orders.dotprint', $sale->order_id) }}"
-                                class="btn btn-success btn-sm"
-                            >
-                                <i class="far fa-dot-circle fa-fw mr-2"></i> Dot Print
-                            </a>
-                        </td>
                     </tr>
                 @endforeach
                 </tbody>
