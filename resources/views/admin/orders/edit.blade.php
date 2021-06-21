@@ -13,6 +13,18 @@
         $(document).ready(function() {
            $('#customer_id').select2();
         });
+
+        function increaseQty() {
+            let qty = Number(document.getElementById('quantity').value);
+            document.getElementById('quantity').value = qty + 1;
+        }
+
+        function decreaseQty() {
+            let qty = Number(document.getElementById('quantity').value);
+            if (qty <= 1) return;
+            document.getElementById('quantity').value = qty - 1;
+        }
+
     </script>
 @endsection
 
@@ -72,18 +84,35 @@
                     @enderror
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-12 col-md-3">
                 <label for="quantity">Quantity</label>
-                <input
-                    type="number"
-                    name="quantity" id="quantity"
-                    value="{{ old('quantity') ?? $order->quantity }}"
-                    class="form-control @error('quantity') is-invalid @enderror"
-                >
+                <div class="input-group">
+                    <div class="input-group-append">
+                        <button type="button" class="input-group-text" onclick="decreaseQty()">
+                            <i class="fa fa-minus fa-fw"></i>
+                        </button>
+                    </div>
+
+                    <input
+                        type="text"
+                        name="quantity" id="quantity"
+                        value="{{ old('quantity') ?? $order->quantity }}"
+                        style="text-align: center;font-weight: bold"
+                        class="form-control @error('quantity') is-invalid @enderror"
+                    >
+
+                    <div class="input-group-prepend">
+                        <button type="button" class="input-group-text" onclick="increaseQty()">
+                            <i class="fa fa-plus fa-fw"></i>
+                        </button>
+                    </div>
+
+                </div>
                 @error('quantity')
                 <small class="form-text text-danger">{{ $message }}</small>
                 @enderror
             </div>
+
 
             <div class="mt-4 mb-1">
                 <input type="submit" class="btn btn-primary" value="Update Order">
